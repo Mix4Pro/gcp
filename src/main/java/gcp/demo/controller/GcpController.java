@@ -3,6 +3,7 @@ package gcp.demo.controller;
 import gcp.demo.dto.request.PersonRequestDto;
 import gcp.demo.dto.response.PersonResponseDto;
 import gcp.demo.service.GcpService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ public class GcpController {
     }
 
     @PostMapping("api/gcp/users")
-    public ResponseEntity<PersonResponseDto> addPersonToDB (@RequestBody PersonRequestDto personRequestDto) {
+    public ResponseEntity<PersonResponseDto> addPersonToDB (@RequestBody @Valid PersonRequestDto personRequestDto) {
         return ResponseEntity.ok(gcpService.addPersonToDB(personRequestDto));
     }
 }

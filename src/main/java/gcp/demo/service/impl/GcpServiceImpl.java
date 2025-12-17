@@ -101,6 +101,42 @@ public class GcpServiceImpl implements GcpService {
     }
 
     public PersonResponseDto addPersonToDB (PersonRequestDto personRequestDto) {
-        
+        for(PersonEntity person_i : listOfPeople) {
+            if(person_i.pinfl().equals(personRequestDto.pinfl())) {
+                throw new IllegalArgumentException("Человек с такими данными уже зарегестрирован");
+            }
+        }
+
+        PersonEntity personEntity = PersonEntity.builder()
+            .id(listOfPeople.size())
+            .fio(personRequestDto.fio())
+            .address(personRequestDto.address())
+            .phoneNumber(personRequestDto.phoneNumber())
+            .email(personRequestDto.email())
+            .pinfl(personRequestDto.pinfl())
+            .age(personRequestDto.age())
+            .gender(String.valueOf(personRequestDto.gender()))
+            .documentType(String.valueOf(personRequestDto.documentType()))
+            .photoUrl(personRequestDto.photoUrl())
+            .documentGivenDate(personRequestDto.documentGivenDate())
+            .residency(String.valueOf(personRequestDto.residency()))
+            .build();
+
+
+        peopleRepository.addPersonInfo(personEntity);
+
+        return PersonResponseDto.builder()
+            .fio(personRequestDto.fio())
+            .address(personRequestDto.address())
+            .phoneNumber(personRequestDto.phoneNumber())
+            .email(personRequestDto.email())
+            .pinfl(personRequestDto.pinfl())
+            .age(personRequestDto.age())
+            .gender(personRequestDto.gender())
+            .documentType(personRequestDto.documentType())
+            .photoUrl(personRequestDto.photoUrl())
+            .documentGivenDate(personRequestDto.documentGivenDate())
+            .residency(personRequestDto.residency())
+            .build();
     }
 }

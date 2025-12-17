@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
@@ -38,26 +39,25 @@ public record PersonRequestDto (
     @Pattern(regexp = "\\d{14}", message = "ПИНФ должен состоять из 14 цифр")
     String pinfl,
 
-    @NotBlank(message = "Возраст не может быть пустым")
     @Min(value = 1, message = "Возраст не может быть меньше 1 года")
     @Max(value = 200 , message = "Возраст не может быть больше 200 лет")
     int age,
 
-    @NotBlank(message = "Гендр не может быть пустым")
+    @NotNull(message = "Гендр не может быть пустым")
     PersonGender gender,
 
-    @NotBlank (message = "Тип документа не может быть пустым")
+    @NotNull (message = "Тип документа не может быть пустым")
     PersonDocumentType documentType,
 
     @NotBlank(message = "Ссылка на фото не может быть пустой")
     @Size(max = 400 , message = "Ссылка не может состоять из более чем 400 символов")
     String photoUrl,
 
-    @NotBlank(message = "Дата выдачи не может быть пустой")
+    @NotNull(message = "Дата выдачи не может быть пустой")
     @Past(message = "Дата выдачи не валидна")
     LocalDate documentGivenDate,
 
-    @NotBlank(message = "Гражданство не может быть пустым")
+    @NotNull(message = "Гражданство не может быть пустым")
     PersonResidency residency
 ) {
 
