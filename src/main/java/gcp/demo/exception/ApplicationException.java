@@ -1,19 +1,19 @@
 package gcp.demo.exception;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 @Getter
-@Setter
 @ToString
-public class ApplicationException {
+public class ApplicationException extends RuntimeException {
     private int code;
-    private int status;
+    private HttpStatus status;
     private String errorType;
     private String message;
 
-    public ApplicationException(int code , int status , String errorType , String message) {
+    public ApplicationException(int code , HttpStatus status , String errorType , String message) {
+        super(message);
         this.code = code;
         this.status = status;
         this.errorType = errorType;
