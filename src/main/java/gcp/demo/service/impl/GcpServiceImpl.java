@@ -3,6 +3,7 @@ package gcp.demo.service.impl;
 import gcp.demo.dto.request.PersonRequestDto;
 import gcp.demo.dto.response.PersonResponseDto;
 import gcp.demo.entity.PersonEntity;
+import gcp.demo.exception.PersonIncorrectPinflException;
 import gcp.demo.exception.PersonNotFoundException;
 import gcp.demo.mapper.PersonMapper;
 import gcp.demo.repository.PeopleRepository;
@@ -52,7 +53,7 @@ public class GcpServiceImpl implements GcpService {
 
     public PersonResponseDto getPersonByPinfl (String pinfl) {
         if(!pinfl.matches("\\d{14}")) {
-            throw new IllegalArgumentException("ПИНФЛ должен состоять из 14 цифр");
+            throw new PersonIncorrectPinflException("ПИНФЛ должен состоять из 14 цифр");
         }
 
         for(int i = 0; i < listOfPeople.size(); i++) {

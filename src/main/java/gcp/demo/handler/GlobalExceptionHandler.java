@@ -1,6 +1,8 @@
 package gcp.demo.handler;
 
 import gcp.demo.dto.ErrorDto;
+import gcp.demo.exception.PersonIncorrectPinflException;
+import gcp.demo.exception.PersonNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,22 @@ import java.util.HashMap;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorDto> handleIllegalArgumentException (IllegalArgumentException e) {
-        log.error("IllegalArgumentException error {}", e.getMessage());
+    @ExceptionHandler(PersonNotFoundException.class)
+    public ResponseEntity<ErrorDto> PersonNotFoundException (PersonNotFoundException e) {
+        log.error("Person not found error {}", e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            ErrorDto.builder()
+                .code(404)
+                .status(HttpStatus.NOT_FOUND)
+                .message(e.getMessage())
+                .build()
+        );
+    }
+
+    @ExceptionHandler(PersonIncorrectPinflException.class)
+    public ResponseEntity<ErrorDto> handlePersonIncorrectPinflException (PersonIncorrectPinflException e) {
+        log.error("Pinfl is incorrect {}",e.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ErrorDto.builder()
