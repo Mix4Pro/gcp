@@ -9,5 +9,5 @@ public interface GcpService {
     List<PersonResponseDto> getAllUsersInfo ();
     PersonResponseDto getPersonById (long id);
     PersonResponseDto getPersonByPinfl (String pinfl);
-//    PersonResponseDto addPersonToDB (PersonRequestDto personRequestDto);
+    PersonResponseDto addPersonToDB (PersonRequestDto personRequestDto);
 }

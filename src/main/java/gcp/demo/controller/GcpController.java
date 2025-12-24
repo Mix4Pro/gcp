@@ -35,8 +35,8 @@ public class GcpController {
         return ResponseEntity.ok(gcpService.getPersonByPinfl(pinfl));
     }
 
-//    @PostMapping("api/gcp/users")
-//    public ResponseEntity<PersonResponseDto> addPersonToDB (@RequestBody @Valid PersonRequestDto personRequestDto) {
-//        return ResponseEntity.ok(gcpService.addPersonToDB(personRequestDto));
-//    }
+    @PostMapping("api/gcp/users")
+    public ResponseEntity<PersonResponseDto> addPersonToDB (@RequestBody @Valid PersonRequestDto personRequestDto) {
+        return ResponseEntity.ok(gcpService.addPersonToDB(personRequestDto));
+    }
 }

@@ -49,33 +49,16 @@ public class GcpServiceImpl implements GcpService {
         );
     }
 
-//    public PersonResponseDto addPersonToDB (PersonRequestDto personRequestDto) {
-//        for(PersonEntity person_i : listOfPeople) {
-//            if(person_i.pinfl().equals(personRequestDto.pinfl())) {
-//                throw new PersonExistsInTheDBException("Человек с такими данными уже зарегестрирован");
-//            }
-//        }
-//
-//        PersonEntity entityWithoutId = personMapper.toEntity(personRequestDto);
-//        long uniqueId = nextId.getAndIncrement();
-//        PersonEntity personEntity = new PersonEntity(
-//            uniqueId,
-//            entityWithoutId.fio(),
-//            entityWithoutId.address(),
-//            entityWithoutId.phoneNumber(),
-//            entityWithoutId.email(),
-//            entityWithoutId.pinfl(),
-//            entityWithoutId.age(),
-//            entityWithoutId.gender(),
-//            entityWithoutId.documentType(),
-//            entityWithoutId.photoUrl(),
-//            entityWithoutId.documentGivenDate(),
-//            entityWithoutId.residency()
-//        );
-//
-//
-//        peopleRepository.addPersonInfo(personEntity);
-//
-//        return personMapper.toResponseFromRequest(personRequestDto);
-//    }
+    public PersonResponseDto addPersonToDB (PersonRequestDto personRequestDto) {
+        peopleRepository.findByPinfl(personRequestDto.pinfl())
+            .ifPresent(p -> {
+                throw new PersonExistsInTheDBException("Person with this pinfl already exists");
+            });
+
+        PersonEntity personEntity = personMapper.toEntityFromRequest(personRequestDto);
+
+        PersonEntity savedPersonEntity = peopleRepository.save(personEntity);
+
+        return personMapper.toResponseFromEntity(savedPersonEntity);
+    }
 }
